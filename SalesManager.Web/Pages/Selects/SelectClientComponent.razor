@@ -1,0 +1,27 @@
+﻿@inherits SelectClientComponentBase
+
+@if (PageIsReady)
+{
+    <MudSelect T="string"
+               Label="Cliente"
+               Value="@(ClientSelected != "0" ? ClientSelected : string.Empty)"
+               ValueChanged="OnChangeClientAsync"
+               Variant="Variant.Outlined"
+               AnchorOrigin="Origin.BottomCenter"
+              Clearable>
+
+     @foreach (var clientGetDTO in clientsGetDTO)
+        {
+            <MudSelectItem T="string" Value="@clientGetDTO.Id.ToString()">@clientGetDTO.ClientName</MudSelectItem>
+        }
+
+    </MudSelect>
+}
+else
+{
+    <MudSelect T="string"
+               Label="Carregando clientes..."
+               Disabled="true"
+               Variant="Variant.Outlined"
+              Clearable />
+}

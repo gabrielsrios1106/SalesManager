@@ -1,0 +1,27 @@
+﻿@inherits SelectDepartmentComponentBase
+
+@if (PageIsReady)
+{
+    <MudSelect T="string"
+               Label="Departamento"
+               Value="@(DepartmentSelected != "0" ? DepartmentSelected : string.Empty)"
+               ValueChanged="OnChangeDepartmentAsync"
+               Variant="Variant.Outlined"
+               AnchorOrigin="Origin.BottomCenter"
+              Clearable>
+
+     @foreach (var departmentGetDTO in departmentsGetDTO)
+        {
+            <MudSelectItem T="string" Value="@departmentGetDTO.Id.ToString()">@departmentGetDTO.DepartmentName</MudSelectItem>
+        }
+
+    </MudSelect>
+}
+else
+{
+    <MudSelect T="string"
+               Label="Carregando departamentos..."
+               Disabled="true"
+               Variant="Variant.Outlined"
+               Clearable />
+}

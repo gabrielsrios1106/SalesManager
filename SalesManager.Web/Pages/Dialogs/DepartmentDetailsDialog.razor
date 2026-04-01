@@ -1,0 +1,18 @@
+﻿@inherits DepartmentDetailsDialogBase
+@attribute [Authorize]
+
+<MudDialog>
+    <DialogContent>
+        <MudGrid Justify="Justify.Center" Spacing="1">
+            <MudItem xs="2">
+                <MudField Label="Id" Variant="Variant.Outlined">@DepartmentGetDTO.Id</MudField>
+            </MudItem>
+            <MudItem xs="10">
+                <MudField Label="Data de criação" Variant="Variant.Outlined">@DepartmentGetDTO.CreatedAt</MudField>
+            </MudItem>
+        </MudGrid>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel" Color="Color.Dark">Fechar</MudButton>
+    </DialogActions>
+</MudDialog>

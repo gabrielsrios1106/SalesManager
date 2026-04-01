@@ -1,0 +1,66 @@
+﻿@page "/stockmovement"
+@inherits StockMovementBase
+@attribute [Authorize]
+
+<PageTitle>StockMovement</PageTitle>
+
+<MudTable Items="@stockMovementsGetDTO" Outlined="true" Dense="@dense" Hover="@hover" Striped="true" ReadOnly="@ronly" Filter="new Func<StockMovementGetDTO,bool>(FilterFunc)" SortLabel="Sort By" Loading="@IsLoading" Class="mb-3">
+    <ToolBarContent>
+        <MudText Typo="Typo.h6">Movimento Do Estoque &nbsp;</MudText>
+        <MudFab Color="Color.Primary" DropShadow="false" StartIcon="@Icons.Material.Filled.Sell" @onclick="ShowCreateSaleModal" Size="Size.Medium" />
+        <MudText Typo="Typo.h6">&nbsp;&nbsp;</MudText>
+        <MudFab Color="Color.Error" DropShadow="false" StartIcon="@Icons.Material.Filled.AddShoppingCart" @onclick="ShowCreatePurchaseModal" Size="Size.Medium" />
+        <MudSpacer />
+        <MudTextField @bind-Value="searchString" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+    </ToolBarContent>
+    <ColGroup>
+        <col style="width:14%;" />
+        <col style="width:14%;" />
+        <col style="width:14%;" />
+        <col style="width:14%;" />
+        <col style="width:14%;" />
+        <col style="width:14%;" />
+        <col style="width:14%;" />
+        <col style="width:50px;" />
+    </ColGroup>
+    <HeaderContent>
+        <MudTh><MudTableSortLabel InitialDirection="SortDirection.None" SortBy="new Func<StockMovementGetDTO, object>(x=>x.ProductName)">Nome Do produto</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<StockMovementGetDTO, object>(x=>x.Quantity)">Quantidade</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<StockMovementGetDTO, object>(x=>x.MovementType)">Tipo</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<StockMovementGetDTO, object>(x=>x.ClientName)">Cliente</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<StockMovementGetDTO, object>(x=>x.MovementValue)">Lucro</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<StockMovementGetDTO, object>(x=>x.CreatedAt)">Data</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<StockMovementGetDTO, object>(x=>x.Message)">Mensagem</MudTableSortLabel></MudTh>
+        <MudTh>&nbsp;</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Nome do produto">@context.ProductName</MudTd>
+        <MudTd DataLabel="Quantidade">@context.Quantity</MudTd>
+        <MudTd DataLabel="Tipo de movimento">@context.MovementType</MudTd>
+        <MudTd DataLabel="Cliente">@context.ClientName</MudTd>
+            @if (context.MovementValue > 0)
+            {
+                <MudTd DataLabel="Lucro" Style="color: green">@context.MovementValue.ToString("C", CultureInfoPtBR.NumberFormat)</MudTd>
+            }
+            else
+            {
+                <MudTd DataLabel="Lucro" Style="color: red">@context.MovementValue.ToString("C", CultureInfoPtBR.NumberFormat)</MudTd>
+            }
+        <MudTd DataLabel="Data de criação">@context.CreatedAt</MudTd>
+        <MudTd DataLabel="Mensagem">@context.Message</MudTd>
+        <MudTh>
+            <MudButtonGroup Size="Size.Small" OverrideStyles="false">
+                <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error" Variant="Variant.Filled" title="Excluir" OnClick="(() => OnButtonClicked(context.Id))" />
+            </MudButtonGroup>
+        </MudTh>
+    </RowTemplate>
+    <NoRecordsContent>
+        <MudText Typo="Typo.h6" Style="font-weight: bold">Nenhum registro encontrado!</MudText>
+    </NoRecordsContent>
+    <PagerContent>
+        <MudTablePager />
+    </PagerContent>
+    <EditButtonContent Context="button">
+        <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Outlined.Edit" Class="pa-0" OnClick="@button.ButtonAction" Disabled="@button.ButtonDisabled" />
+    </EditButtonContent>
+</MudTable>

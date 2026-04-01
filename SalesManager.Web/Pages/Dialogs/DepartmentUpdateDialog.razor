@@ -1,0 +1,30 @@
+﻿@inherits DepartmentUpdateDialogBase
+@attribute [Authorize]
+
+<EditForm Model="DepartmentPutDTO" OnValidSubmit="UpdateDepartmentAsync">
+    <DataAnnotationsValidator />
+
+    <MudDialog>
+        <DialogContent>
+
+            @if (PageIsReady)
+            {
+                <MudGrid Justify="Justify.Center" Spacing="1">
+                    <MudItem xs="12" sm="7">
+                        <MudTextField @bind-Value="DepartmentPutDTO.DepartmentName" Label="Nome do departamento" Variant="Variant.Outlined" />
+                        <ValidationMessage For="@(() => DepartmentPutDTO.DepartmentName)" />
+                    </MudItem>
+                </MudGrid>
+            }
+            else
+            {
+                <MudProgressLinear Color="Color.Primary" Indeterminate Class="my-7" />
+            }
+
+        </DialogContent>
+        <DialogActions>
+            <MudButton OnClick="Cancel" Color="Color.Dark" Disabled="@(!PageIsReady)">Fechar</MudButton>
+            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Disabled="@(!PageIsReady)">Salvar</MudButton>
+        </DialogActions>
+    </MudDialog>
+</EditForm>

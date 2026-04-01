@@ -1,0 +1,47 @@
+﻿@inherits ProductCreateDialogBase
+@attribute [Authorize]
+
+<EditForm Model="ProductPostDTO" OnValidSubmit="CreateProductAsync">
+    <DataAnnotationsValidator />
+
+    <MudDialog>
+        <DialogContent>
+
+            @if (PageIsReady)
+            {
+                <MudGrid Justify="Justify.Center" Spacing="1">
+                    <MudItem xs="6">
+                        <MudTextField @bind-Value="ProductPostDTO.ProductName" Label="Nome do produto" Variant="Variant.Outlined" />
+                        <ValidationMessage For="@(() => ProductPostDTO.ProductName)" />
+                    </MudItem>
+                    <MudItem xs="6">
+                        <SelectDepartmentComponent ChangeDepartment="ChangeDepartmentIdCreate" />
+                        <ValidationMessage For="@(() => ProductPostDTO.DepartmentId)" />
+                    </MudItem>
+
+                    <MudItem xs="4">
+                        <MudTextField @bind-Value="ProductPostDTO.Price" Label="Preço" Variant="Variant.Outlined" />
+                        <ValidationMessage For="@(() => ProductPostDTO.Price)" />
+                    </MudItem>
+                    <MudItem xs="4">
+                        <MudTextField @bind-Value="ProductPostDTO.BalanceStock" Label="Estoque inicial" Variant="Variant.Outlined" />
+                        <ValidationMessage For="@(() => ProductPostDTO.BalanceStock)" />
+                    </MudItem>
+                    <MudItem xs="4">
+                        <MudTextField @bind-Value="ProductPostDTO.MinimumStock" Label="Minimo em estoque" Variant="Variant.Outlined" />
+                        <ValidationMessage For="@(() => ProductPostDTO.MinimumStock)" />
+                    </MudItem>
+                </MudGrid>
+            }
+            else
+            {
+                <MudProgressLinear Color="Color.Primary" Indeterminate Class="my-7" />
+            }
+
+        </DialogContent>
+        <DialogActions>
+            <MudButton OnClick="Cancel" Color="Color.Dark" Disabled="@(!PageIsReady)">Fechar</MudButton>
+            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Disabled="@(!PageIsReady)">Adicionar</MudButton>
+        </DialogActions>
+    </MudDialog>
+</EditForm>

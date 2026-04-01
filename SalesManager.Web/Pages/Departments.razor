@@ -1,0 +1,53 @@
+﻿@page "/departments"
+@inherits DepartmentsBase
+@attribute [Authorize]
+
+<PageTitle>Departments</PageTitle>
+
+<MudTable Items="@departmentsGetDTOToShow" Outlined="true" Dense="@dense" Striped="true" Hover="@hover" ReadOnly="@ronly" Filter="new Func<DepartmentGetDTO,bool>(FilterFunc)" SortLabel="Sort By" Loading="@IsLoading" Class="mb-3">
+    <ToolBarContent>
+        <MudText Typo="Typo.h6">Departmentos &nbsp</MudText>
+        <MudFab Color="Color.Primary" StartIcon="@Icons.Material.Filled.Add" DropShadow="false" OnClick="@ShowCreateModal" Size="Size.Medium" />
+        <MudSpacer />
+        <MudSwitch T="bool" Value="@statusDepartment" Color="Color.Surface" @onclick="ChangeStatusOption" Label="Mostrar departamentos inativos" ThumbIcon="@(statusDepartment==true ? Icons.Material.Filled.Done : Icons.Material.Filled.Close)" ThumbIconColor="@(statusDepartment==true ? Color.Success : Color.Error)" />
+        <MudSpacer />
+        <MudTextField @bind-Value="searchString" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+    </ToolBarContent>
+    <ColGroup>
+        <col style="width:50%;" />
+        <col style="width:50%;" />
+        <col style="width:50px;" />
+    </ColGroup>
+    <HeaderContent>
+        <MudTh><MudTableSortLabel InitialDirection="SortDirection.None" SortBy="new Func<DepartmentGetDTO, object>(x=>x.DepartmentName)">Departamento</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<DepartmentGetDTO, object>(x=>x.CreatedAt)">Data de criação</MudTableSortLabel></MudTh>
+        <MudTh>&nbsp;</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Departamento">@context.DepartmentName</MudTd>
+        <MudTd DataLabel="Data de criação">@context.CreatedAt</MudTd>
+        <MudTh>
+            <MudButtonGroup Size="Size.Small" OverrideStyles="false">
+                @if (context.Status == 1)
+                {
+                    <MudIconButton Color="Color.Primary" Variant="Variant.Filled" Icon="@Icons.Material.Filled.Edit" title="Editar" OnClick="(() => ShowUpdateModal(context))" />
+                    <MudIconButton Color="Color.Dark" Variant="Variant.Filled" Icon="@Icons.Material.Filled.Assignment" title="Detalhes" OnClick="(() => ShowDetailsModal(context))" />
+                    <MudIconButton Color="Color.Error" Variant="Variant.Filled" Icon="@Icons.Material.Filled.Delete" title="Excluir" OnClick="(() => OnButtonClicked(context.Id))" />
+                }
+                else
+                {
+                    <MudIconButton Color="Color.Success" Variant="Variant.Filled" Icon="@Icons.Material.Filled.RestoreFromTrash" title="Ativar" OnClick="(() => ActiveDepartmentsAsync(context))" />
+                }
+            </MudButtonGroup>
+        </MudTh>
+    </RowTemplate>
+    <NoRecordsContent>
+        <MudText Typo="Typo.h6" Style="font-weight: bold">Nenhum departamento encontrado!</MudText>
+    </NoRecordsContent>
+    <PagerContent>
+        <MudTablePager />
+    </PagerContent>
+    <EditButtonContent Context="button">
+        <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Outlined.Edit" Class="pa-0" OnClick="@button.ButtonAction" Disabled="@button.ButtonDisabled" />
+    </EditButtonContent>
+</MudTable>

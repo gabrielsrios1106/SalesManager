@@ -1,0 +1,38 @@
+﻿@page "/register"
+@inherits RegisterBase
+
+<MudGrid Justify="Justify.Center">
+    <MudItem xs="12" sm="7">
+        <MudPaper Class="pa-4" Outlined="true">
+            <EditForm OnValidSubmit="CreateRegisterAsync" Model="registerPostDTO">
+                <DataAnnotationsValidator />
+
+                <MudPaper Class="d-flex justify-center flex-grow-1 gap-4" Elevation="0">
+                    <MudImage Src="/images/LogoOficial1Preta.png" Height="70" Alt="financialmanager" Class="rounded-lg ma-4" />
+                </MudPaper>
+                <MudText Align="Align.Center" Typo="Typo.h5">CRIE SUA CONTA</MudText>
+                <a href="Login"><MudText Align="Align.Center" Typo="Typo.subtitle1">Ja possuo minha conta</MudText></a>
+                <MudGrid Justify="Justify.Center" Spacing="1">
+                    <MudItem xs="6">
+                        <MudTextField T="string" InputType="InputType.Text" @bind-Value="registerPostDTO.CompleteName" Label="Nome" Variant="Variant.Outlined" />
+                        <ValidationMessage For="@(() => registerPostDTO.CompleteName)" />
+                    </MudItem>
+                    <MudItem xs="6">
+                        <MudTextField T="string" InputType="InputType.Email" @bind-Value="registerPostDTO.Email" Label="Email" Variant="Variant.Outlined" />
+                        <ValidationMessage For="@(() => registerPostDTO.Email)" />
+                    </MudItem>
+                    <MudItem xs="6">
+                        <MudTextField T="string" InputType="InputType.Password" @bind-Value="registerPostDTO.Password" Label="Senha" Variant="Variant.Outlined" />
+                        <ValidationMessage For="@(() => registerPostDTO.Password)" />
+                    </MudItem>
+                    <MudItem xs="6">
+                        <MudTextField T="string" InputType="InputType.Password" @bind-Value="registerPostDTO.ConfirmPassword" Label="Confirmar senha" Variant="Variant.Outlined" />
+                        <ValidationMessage For="@(() => registerPostDTO.ConfirmPassword)" />
+                    </MudItem>
+                </MudGrid>
+                <br />
+                <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" FullWidth="true">Criar conta</MudButton>
+            </EditForm>
+        </MudPaper>
+    </MudItem>
+</MudGrid>

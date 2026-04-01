@@ -1,0 +1,27 @@
+﻿@inherits SelectProductComponentBase
+
+@if (PageIsReady)
+{
+    <MudSelect T="string"
+               Label="Produto"
+               Value="@(ProductSelected != "0" ? ProductSelected : string.Empty)"
+               ValueChanged="OnChangeProductAsync"
+               Variant="Variant.Outlined"
+               AnchorOrigin="Origin.BottomCenter"
+              Clearable>
+
+     @foreach (var productGetDTO in productGetDTO)
+        {
+            <MudSelectItem T="string" Value="@productGetDTO.Id.ToString()">@productGetDTO.ProductName</MudSelectItem>
+        }
+
+    </MudSelect>
+}
+else
+{
+    <MudSelect T="string"
+               Label="Carregando produtos..."
+               Disabled="true"
+               Variant="Variant.Outlined"
+              Clearable />
+}

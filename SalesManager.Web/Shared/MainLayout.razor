@@ -1,0 +1,44 @@
+﻿@inherits LayoutComponentBase
+
+<MudThemeProvider />
+<MudPopoverProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+<AuthorizeView>
+    <Authorized>
+        <MudLayout>
+            <MudAppBar Fixed Color="Color.Primary">
+                <MudIconButton Icon="@Icons.Material.Filled.Menu" Edge="Edge.Start" OnClick="ToggleDrawer" Style="color: #FFFFFF" />
+                <MudImage Src="/images/LogoContornada.png" Alt="Logo" Width="200" />
+                <MudSpacer />
+                <MudGrid Spacing="1" Class="d-flex justify-end align-center">
+                    <MudItem xs="1"><MudText Class="text-white" Style="font-weight:bold">@context.User.Identity.Name</MudText></MudItem>
+                    <MudItem xs="1"><Logout /></MudItem>
+                </MudGrid>
+            </MudAppBar>
+            <MudDrawer @bind-Open="@open" Anchor="Anchor.Start" Elevation="1" Variant="@DrawerVariant.Temporary">
+                <NavMenu />
+            </MudDrawer>
+            <MudMainContent Class="mx-4 mb-5 mt-5">
+                @Body
+            </MudMainContent>
+        </MudLayout>
+    </Authorized>
+    <NotAuthorized>
+        <MudGrid Spacing="1" Class="mt-5">
+            <Login />
+        </MudGrid>
+    </NotAuthorized>
+</AuthorizeView>
+
+
+
+@code {
+    bool open = false;
+
+    void ToggleDrawer()
+    {
+        open = !open;
+    }
+}

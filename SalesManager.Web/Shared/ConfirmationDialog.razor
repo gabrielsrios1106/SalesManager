@@ -1,0 +1,17 @@
+﻿@inherits ConfirmationDialogBase
+@attribute [Authorize]
+
+<MudDialog>
+    <DialogContent>
+        <MudText Class="mt-4">
+            <MudIcon Icon="@Icons.Material.Filled.QuestionMark" Color="Color.Error" Size="Size.Small" /> @ConfirmMessage
+        </MudText>
+        <MudText Class="mt-2 mb-4">
+            <MudIcon Icon="@Icons.Material.Filled.Warning" Color="Color.Warning" Size="Size.Small" /> @AlertMessage
+        </MudText>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="OnClickCancelAsync" Color="@CancelButtonColor">@CancelButtonText</MudButton>
+        <MudButton OnClick="OnClickConfirmAsync" Variant="Variant.Filled" Color="@ConfirmButtonColor">@ConfirmButtonText</MudButton>
+    </DialogActions>
+</MudDialog>

@@ -1,0 +1,35 @@
+﻿@typeparam TItem
+@inherits FormModalBase<TItem>
+
+<div class="modal-backdrop show"></div>
+<div class="modal" tabindex="-1" role="dialog" aria-hidden="true" style="display:block">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">@Title</h4>
+                <button type="button" class="btn-close close pull-right" aria-label="Fechar" data-dismiss="modal" @onclick="CloseModal">
+                    <span aria-hidden="true" class="visually-hidden">&times;</span>
+                </button>
+            </div>
+
+            <EditForm Model="@Model" OnValidSubmit="OnValidSubmitFormModal">
+                <DataAnnotationsValidator />
+            
+                @ChildContent
+
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" @onclick="CloseModal">
+                        Fechar
+                    </button>
+                    <button type="submit" class="btn btn-primary ml-auto">
+                        <span class="visible" style="display:normal">@NameOfButton</span>
+                        <span style="display:none">
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            <span class="visually-hidden">Salvando...</span>
+                        </span>
+                    </button>
+                </div>
+            </EditForm>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,43 @@
+﻿@inherits ProductUpdateDialogBase
+@attribute [Authorize]
+
+<EditForm Model="ProductPutDTO" OnValidSubmit="UpdateProductAsync">
+    <DataAnnotationsValidator />
+
+    <MudDialog>
+        <DialogContent>
+
+            @if (PageIsReady)
+            {
+                <MudGrid Justify="Justify.Center" Spacing="1">
+                    <MudItem xs="6">
+                        <MudTextField @bind-Value="ProductPutDTO.ProductName" Label="Nome do Produto" Variant="Variant.Outlined" />
+                        <ValidationMessage For="@(() => ProductPutDTO.ProductName)" />
+                    </MudItem>
+                    <MudItem xs="6">
+                        <MudTextField @bind-Value="ProductPutDTO.Price" Label="Preço" Variant="Variant.Outlined" />
+                        <ValidationMessage For="@(() => ProductPutDTO.Price)" />
+                    </MudItem>
+
+                    <MudItem xs="6">
+                        <MudTextField @bind-Value="ProductPutDTO.MinimumStock" Label="Minimo em estoque" Variant="Variant.Outlined" />
+                        <ValidationMessage For="@(() => ProductPutDTO.MinimumStock)" />
+                    </MudItem>
+                    <MudItem xs="6">
+                        <SelectDepartmentComponent ChangeDepartment="ChangeDepartmentIdUpdate" DepartmentSelected="@ProductPutDTO.DepartmentId.ToString()" />
+                        <ValidationMessage For="@(() => ProductPutDTO.DepartmentId)" />
+                    </MudItem>
+                </MudGrid>
+            }
+            else
+            {
+                <MudProgressLinear Color="Color.Primary" Indeterminate Class="my-7" />
+            }
+
+        </DialogContent>
+        <DialogActions>
+            <MudButton OnClick="Cancel" Color="Color.Dark" Disabled="@(!PageIsReady)">Fechar</MudButton>
+            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Disabled="@(!PageIsReady)">Salvar</MudButton>
+        </DialogActions>
+    </MudDialog>
+</EditForm>

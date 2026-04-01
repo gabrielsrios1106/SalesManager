@@ -1,0 +1,93 @@
+﻿@page "/financialmanager"
+@inherits FinancialManagerBase
+@attribute [Authorize]
+
+<PageTitle>StockMovement</PageTitle>
+
+<MudGrid Spacing="10" Justify="Justify.Center">
+    <MudItem>
+        <MudCard Outlined="true" Class="mud-theme-success py-4 px-6 mx-4 rounded-lg">
+            <MudCardContent>
+                <MudText>Receita</MudText>
+                <MudText Typo="Typo.h5">@balanceGetDTO.AllGain.ToString("C", CultureInfoPtBR.NumberFormat)</MudText>
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
+    <MudItem>
+        <MudCard Outlined="true" Class="mud-theme-error py-4 px-6 mx-4 rounded-lg">
+            <MudCardContent>
+                <MudText>Despesa</MudText>
+                <MudText Typo="Typo.h5">@balanceGetDTO.AllExpenseOrLoss.ToString("C", CultureInfoPtBR.NumberFormat)</MudText>
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
+    <MudItem>
+        <MudCard Outlined="true" Class="mud-theme-info py-4 px-6 mx-4 rounded-lg">
+            <MudCardContent>
+                <MudText>Lucro total</MudText>
+                <MudText Typo="Typo.h5">@balanceGetDTO.AllProfit.ToString("C", CultureInfoPtBR.NumberFormat)</MudText>
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
+</MudGrid>
+
+<br />
+
+<MudChart ChartType="ChartType.Line" ChartSeries="@Series" @bind-SelectedIndex="Index" ChartLabels="@XAxisLabels" Width="100%" Height="350px"></MudChart>
+
+<br />
+
+<MudTable Items="@financialManagersGetDTO" Outlined="true" Striped="true" Dense="@dense" Hover="@hover" ReadOnly="@ronly" Filter="new Func<FinancialManagerGetDTO,bool>(FilterFunc)" SortLabel="Sort By" Loading="@IsLoading">
+    <ToolBarContent>
+        <MudText Typo="Typo.h6">Controle financeiro</MudText>
+        <MudSpacer />
+        <MudTextField @bind-Value="searchString" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+    </ToolBarContent>
+    <ColGroup>
+        <col style="width:25%;" />
+        <col style="width:25%;" />
+        <col style="width:25%;" />
+        <col style="width:25%;" />
+    </ColGroup>
+    <HeaderContent>
+        <MudTh><MudTableSortLabel InitialDirection="SortDirection.None" SortBy="new Func<FinancialManagerGetDTO, object>(x=>x.ProductName)">Nome Do produto</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<FinancialManagerGetDTO, object>(x=>x.GainSalesOfProduct)">Ganho Total</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<FinancialManagerGetDTO, object>(x=>x.LossOrExpenseOfProduct)">Gasto Totais</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<FinancialManagerGetDTO, object>(x=>x.ProfitOfProduct)">Lucro Total</MudTableSortLabel></MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="Nome do produto">@context.ProductName</MudTd>
+        @if (context.GainSalesOfProduct > 0)
+        {
+            <MudTd DataLabel="Ganhos totais" Style="color: green">@context.GainSalesOfProduct.ToString("C", CultureInfoPtBR.NumberFormat)</MudTd>
+        }
+        else
+        {
+            <MudTd DataLabel="Ganhos totais" Style="color: red">@context.GainSalesOfProduct.ToString("C", CultureInfoPtBR.NumberFormat)</MudTd>
+        }
+
+        @if (context.LossOrExpenseOfProduct > 0)
+        {
+            <MudTd DataLabel="Ganhos totais" Style="color: green">@context.LossOrExpenseOfProduct.ToString("C", CultureInfoPtBR.NumberFormat)</MudTd>
+        }
+        else
+        {
+            <MudTd DataLabel="Ganhos totais" Style="color: red">@context.LossOrExpenseOfProduct.ToString("C", CultureInfoPtBR.NumberFormat)</MudTd>
+        }
+
+        @if (context.ProfitOfProduct > 0)
+        {
+            <MudTd DataLabel="Ganhos totais" Style="color: green">@context.ProfitOfProduct.ToString("C", CultureInfoPtBR.NumberFormat)</MudTd>
+        }
+        else
+        {
+            <MudTd DataLabel="Ganhos totais" Style="color: red">@context.ProfitOfProduct.ToString("C", CultureInfoPtBR.NumberFormat)</MudTd>
+        }
+        </RowTemplate>
+    <NoRecordsContent>
+        <MudText Typo="Typo.h6" Style="font-weight: bold">Nenhum produto encontrado!</MudText>
+    </NoRecordsContent>
+    <PagerContent>
+        <MudTablePager />
+    </PagerContent>
+</MudTable>

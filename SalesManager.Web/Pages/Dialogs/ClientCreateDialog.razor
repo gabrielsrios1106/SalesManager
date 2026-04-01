@@ -1,0 +1,46 @@
+﻿@inherits ClientsCreateDialogBase
+
+<EditForm Model="ClientPostDTO" OnValidSubmit="CreateClientAsync">
+    <DataAnnotationsValidator />
+
+    <MudDialog>
+        <DialogContent>
+
+            @if (PageIsReady)
+            {
+                <MudGrid Justify="Justify.Center" Spacing="1">
+                    <MudItem xs="6">
+                        <MudTextField @bind-Value="ClientPostDTO.ClientName" Label="Nome do cliente" Variant="Variant.Outlined" />
+                        <ValidationMessage For="@(() => ClientPostDTO.ClientName)" />
+                    </MudItem>
+                    <MudItem xs="6">
+                        <MudTextField @bind-Value="ClientPostDTO.ClientEmail" Label="Email" Variant="Variant.Outlined" />
+                        <ValidationMessage For="@(() => ClientPostDTO.ClientName)" />
+                    </MudItem>
+
+                    <MudItem xs="2">
+                        <MudTextField @bind-Value="ClientPostDTO.ClientCEP" Label="CEP" Variant="Variant.Outlined" />
+                        <ValidationMessage For="@(() => ClientPostDTO.ClientCEP)" />
+                    </MudItem>
+                    <MudItem xs="5">
+                        <MudTextField @bind-Value="ClientPostDTO.ClientAddressState" Label="Estado" Variant="Variant.Outlined" />
+                        <ValidationMessage For="@(() => ClientPostDTO.ClientAddressState)" />
+                    </MudItem>
+                    <MudItem xs="5">
+                        <MudTextField @bind-Value="ClientPostDTO.ClientAddressCity" Label="Cidade" Variant="Variant.Outlined" />
+                        <ValidationMessage For="@(() => ClientPostDTO.ClientAddressCity)" />
+                    </MudItem>
+                </MudGrid>
+            }
+            else
+            {
+                <MudProgressLinear Color="Color.Primary" Indeterminate Class="my-7" />
+            }
+
+        </DialogContent>
+        <DialogActions>
+            <MudButton OnClick="Cancel" Color="Color.Dark" Disabled="@(!PageIsReady)">Fechar</MudButton>
+            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Disabled="@(!PageIsReady)">Adicionar</MudButton>
+        </DialogActions>
+    </MudDialog>
+</EditForm>

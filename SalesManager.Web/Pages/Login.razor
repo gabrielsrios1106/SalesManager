@@ -1,0 +1,77 @@
+﻿@page "/login"
+@inherits LoginBase
+
+@if (Option == "login")
+{
+    string option = "register";
+
+    <MudGrid Justify="Justify.Center">
+        <MudItem xs="6">
+            <MudPaper Class="pa-4" Outlined="true">
+                <EditForm OnValidSubmit="LoginAsync" Model="LoginFormPostDTO">
+                    <DataAnnotationsValidator />
+
+                    <MudPaper Class="d-flex justify-center flex-grow-1 gap-4" Elevation="0">
+                        <MudImage Src="/images/LogoOficial1Preta.png" Height="70" Alt="Logo financialmanager" Class="rounded-lg ma-4" align="center" />
+                    </MudPaper>
+                    <MudText Align="Align.Center" Typo="Typo.h6">ENTRE NA SUA CONTA</MudText>
+                    <MudLink OnClick="() => ChangeOption(option)" Underline="Underline.None">
+                        <MudText Align="Align.Center" Typo="Typo.subtitle1">Criar minha conta</MudText>
+                    </MudLink>
+
+                    <MudTextField T="string" InputType="InputType.Email" Label="Email" @bind-Value="LoginFormPostDTO.Email" Variant="Variant.Outlined"/>
+                    <ValidationMessage For="@(() => LoginFormPostDTO.Email)" />
+
+                    <MudTextField T="string" InputType="InputType.Password" Label="Senha" @bind-Value="LoginFormPostDTO.Password" Variant="Variant.Outlined"/>
+                    <ValidationMessage For="@(() => LoginFormPostDTO.Password)" />
+
+                    <br />
+                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" FullWidth="true">Entrar</MudButton>
+                </EditForm>
+            </MudPaper>
+        </MudItem>
+    </MudGrid>
+
+}
+else
+{
+    string option = "login";
+
+    <MudGrid Justify="Justify.Center">
+        <MudItem xs="12" sm="7">
+            <MudPaper Class="pa-4" Outlined="true">
+                <EditForm OnValidSubmit="CreateRegisterAsync" Model="RegisterPostDTO">
+                    <DataAnnotationsValidator />
+
+                    <MudPaper Class="d-flex justify-center flex-grow-1 gap-4" Elevation="0">
+                        <MudImage Src="/images/LogoOficial1Preta.png" Height="70" Alt="financialmanager" Class="rounded-lg ma-4" align="center" />
+                    </MudPaper>
+                    <MudText Align="Align.Center" Typo="Typo.h6">CRIE SUA CONTA</MudText>
+                    <MudLink OnClick="() => ChangeOption(option)" Underline="Underline.None">
+                        <MudText Align="Align.Center" Typo="Typo.subtitle1">Já possuo minha conta</MudText>
+                    </MudLink>
+                    <MudGrid Justify="Justify.Center" Spacing="1">
+                        <MudItem xs="6">
+                            <MudTextField T="string" InputType="InputType.Text" @bind-Value="RegisterPostDTO.CompleteName" Label="Nome" Variant="Variant.Outlined" />
+                            <ValidationMessage For="@(() => RegisterPostDTO.CompleteName)" />
+                        </MudItem>
+                        <MudItem xs="6">
+                            <MudTextField T="string" InputType="InputType.Email" @bind-Value="RegisterPostDTO.Email" Label="Email" Variant="Variant.Outlined" />
+                            <ValidationMessage For="@(() => RegisterPostDTO.Email)" />
+                        </MudItem>
+                        <MudItem xs="6">
+                            <MudTextField T="string" InputType="InputType.Password" @bind-Value="RegisterPostDTO.Password" Label="Senha" Variant="Variant.Outlined" />
+                            <ValidationMessage For="@(() => RegisterPostDTO.Password)" />
+                        </MudItem>
+                        <MudItem xs="6">
+                            <MudTextField T="string" InputType="InputType.Password" @bind-Value="RegisterPostDTO.ConfirmPassword" Label="Confirmar senha" Variant="Variant.Outlined" />
+                            <ValidationMessage For="@(() => RegisterPostDTO.ConfirmPassword)" />
+                        </MudItem>
+                    </MudGrid>
+                    <br />
+                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" FullWidth="true">Criar conta</MudButton>
+                </EditForm>
+            </MudPaper>
+        </MudItem>
+    </MudGrid>
+}

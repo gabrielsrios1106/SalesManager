@@ -1,0 +1,28 @@
+﻿@inherits SelectMovementTypeComponentBase
+@if (PageIsReady)
+{
+    <MudSelect T="string"
+               Label="Tipo de movimento"
+               Value="@(MovementTypeSelected != "0" ? MovementTypeSelected : string.Empty)"
+               ValueChanged="OnChangeMovementTypeAsync"
+               Variant="Variant.Outlined"
+               AnchorOrigin="Origin.BottomCenter"
+              Clearable>
+
+     @foreach (var movementTypes in MovementTypes)
+        {
+            <MudSelectItem T="string" Value="@movementTypes.ToString()">@movementTypes.ToString()</MudSelectItem>
+        }
+
+    </MudSelect>
+}
+else
+{
+    <MudSelect T="string"
+               Label="Carregando tipos de movimento..."
+               Disabled="true"
+               Variant="Variant.Outlined"
+              Clearable />
+}
+
+

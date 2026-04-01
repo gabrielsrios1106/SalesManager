@@ -1,0 +1,42 @@
+﻿@inherits StockMovementCreatePurchaseDialogBase
+@attribute [Authorize]
+
+<EditForm Model="StockMovementPurchasePostDTO" OnValidSubmit="CreateStockMovementPurchaseAsync">
+    <DataAnnotationsValidator />
+
+    <MudDialog>
+        <DialogContent>
+
+            @if (PageIsReady)
+            {
+                <MudGrid Justify="Justify.Center" Spacing="1">
+                    <MudItem xs="8">
+                        <SelectProductComponent ChangeProduct="ChangeProductIdCreatePurchase" />
+                        <ValidationMessage For="@(() => StockMovementPurchasePostDTO.ProductId)" />
+                    </MudItem>
+                    <MudItem xs="2">
+                        <MudTextField @bind-Value="StockMovementPurchasePostDTO.Quantity" Label="Quantidade" Variant="Variant.Outlined" />
+                        <ValidationMessage For="@(() => StockMovementPurchasePostDTO.Quantity)" />
+                    </MudItem>
+                    <MudItem xs="2">
+                        <MudTextField @bind-Value="StockMovementPurchasePostDTO.UnitaryValue" Label="Preço Unitario" Variant="Variant.Outlined" />
+                        <ValidationMessage For="@(() => StockMovementPurchasePostDTO.UnitaryValue)" />
+                    </MudItem>
+                    <MudItem xs="12">
+                        <MudTextField @bind-Value="StockMovementPurchasePostDTO.Message" Label="Mensagem(opcional)" Variant="Variant.Outlined" />
+                        <ValidationMessage For="@(() => StockMovementPurchasePostDTO.Message)" />
+                    </MudItem>
+                </MudGrid>
+            }
+            else
+            {
+                <MudProgressLinear Color="Color.Primary" Indeterminate Class="my-7" />
+            }
+
+        </DialogContent>
+        <DialogActions>
+            <MudButton OnClick="Cancel" Color="Color.Dark" Disabled="@(!PageIsReady)">Fechar</MudButton>
+            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Disabled="@(!PageIsReady)">Lançar</MudButton>
+        </DialogActions>
+    </MudDialog>
+</EditForm>

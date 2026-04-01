@@ -1,0 +1,28 @@
+﻿@inherits ProductDetailsDialogBase
+@attribute [Authorize]
+
+<MudDialog>
+    <DialogContent>
+        <MudGrid Justify="Justify.Center" Spacing="1">
+            <MudItem xs="6">
+                <MudField Label="Id" Variant="Variant.Outlined">@ProductGetDTO.Id</MudField>
+            </MudItem>
+            <MudItem xs="6">
+                <MudField Label="Data de Criação" Variant="Variant.Outlined">@ProductGetDTO.CreatedAt</MudField>
+            </MudItem>
+
+            <MudItem xs="4">
+                <MudField Label="Preço" Variant="Variant.Outlined">@ProductGetDTO.Price</MudField>
+            </MudItem>
+            <MudItem xs="4">
+                <MudField Label="Minimo em estoque" Variant="Variant.Outlined">@ProductGetDTO.MinimumStock</MudField>
+            </MudItem>
+            <MudItem xs="4">
+                <MudField Label="Departamento" Variant="Variant.Outlined">@ProductGetDTO.DepartmentName</MudField>
+            </MudItem>
+        </MudGrid>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel" Color="Color.Dark">Fechar</MudButton>
+    </DialogActions>
+</MudDialog>
