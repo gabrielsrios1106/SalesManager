@@ -16,11 +16,15 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+var path = Path.Combine(builder.Environment.ContentRootPath, "Data");
+Directory.CreateDirectory(path);
+
+var databasePath = Path.Combine(path, "Database.db");
+var connectionString = $"Data Source={databasePath}";
+
 builder.Services.AddDbContext<SalesManagerContext>(options =>
-        options.UseSqlite(
-            builder.Configuration.GetConnectionString("SQLiteConnection")
-        )
-    );
+    options.UseSqlite(connectionString)
+);
 
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IDepartmentService, DepartmentService>();
@@ -61,6 +65,8 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+DatabaseInitialize(app.Services);
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -81,3 +87,10 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+void DatabaseInitialize(IServiceProvider serviceProvider)
+{
+    using var scope = serviceProvider.CreateScope();
+    var context = scope.ServiceProvider.GetRequiredService<SalesManagerContext>();
+    context.Database.Migrate();
+}
