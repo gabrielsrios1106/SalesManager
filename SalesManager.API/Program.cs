@@ -53,7 +53,7 @@ builder.Services.AddCors(options =>
         name: APICorsPolicy_Production,
         builder =>
         {
-            builder.WithOrigins("https://lively-ocean-05795740f.6.azurestaticapps.net")
+            builder.WithOrigins("https://jolly-desert-0b552050f.2.azurestaticapps.net")
                    .AllowAnyMethod()
                    .AllowAnyHeader();
         });
